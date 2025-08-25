@@ -6,8 +6,8 @@ class BuildingRepository {
 
   BuildingRepository(this.dioClient);
 
-  Future<List<BuildingModel>> getUserBuildings() async {
-    final response = await dioClient.get('/Buildings/user-buildings');
+  Future<List<BuildingModel>> getUserBuildings(String token) async {
+    final response = await dioClient.get('/Buildings/user-buildings', token: token);
     final List data = response.data as List;
     return data.map((e) => BuildingModel.fromJson(e)).toList();
   }
