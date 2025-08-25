@@ -31,7 +31,15 @@ class BuildingListPage extends ConsumerWidget {
           );
         },
         loading: () => const Center(child: CircularProgressIndicator()),
-        error: (err, stack) => Center(child: Text("Hata: $err")),
+        error: (err, stack) {
+          // Hata terminale yazdırılır
+          debugPrint('Hata: $err');
+          debugPrintStack(stackTrace: stack);
+
+          // UI'da kullanıcıya gösterilir
+          return Center(child: Text("Hata oluştu"));
+        }
+        ,
       ),
     );
   }
