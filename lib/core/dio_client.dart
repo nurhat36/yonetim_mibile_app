@@ -1,6 +1,5 @@
 import 'package:dio/dio.dart';
 
-
 class DioClient {
   static final Dio _dio = Dio(
     BaseOptions(
@@ -13,12 +12,21 @@ class DioClient {
     ),
   );
 
-  // Token eklemek için
+  // GET isteği (token varsa header’a eklenir)
   Future<Response> get(String path, {String? token}) async {
+    final options = Options(
+      headers: {
+        if (token != null) 'Authorization': 'Bearer $token',
+      },
+    );
+    return await _dio.get(path, options: options);
+  }
+  // POST isteği (token + body)
+  Future<Response> post(String path, {dynamic data, String? token}) async {
     if (token != null) {
       _dio.options.headers['Authorization'] = 'Bearer $token';
     }
-    return await _dio.get(path);
+    return await _dio.post(path, data: data);
   }
 
   static Dio get dio => _dio;
