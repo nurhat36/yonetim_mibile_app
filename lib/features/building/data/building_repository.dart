@@ -1,14 +1,20 @@
+import 'package:dio/dio.dart';
 import 'package:yonetim_mibile_app/core/dio_client.dart';
 import 'models/building_model.dart';
 
 class BuildingRepository {
-  final DioClient dioClient;
+  final DioClient _client;
 
-  BuildingRepository(this.dioClient);
+  BuildingRepository(this._client);
 
-  Future<List<BuildingModel>> getUserBuildings(String token) async {
-    final response = await dioClient.get('/Buildings/user-buildings', token: token);
-    final List data = response.data as List;
-    return data.map((e) => BuildingModel.fromJson(e)).toList();
+  Future<List<BuildingResponse>> getUserBuildings(String token) async {
+    final response = await _client.get("Buildings/user-buildings", token: token);
+
+    final data = response.data;
+    if (data is! List) {
+      throw Exception("Beklenmeyen API yanıtı");
+    }
+
+    return data.map((item) => BuildingResponse.fromJson(item)).toList();
   }
 }
