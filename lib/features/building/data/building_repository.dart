@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:yonetim_mibile_app/core/dio_client.dart';
+import 'models/building_dashboard.dart';
 import 'models/building_model.dart';
 
 class BuildingRepository {
@@ -16,5 +17,12 @@ class BuildingRepository {
     }
 
     return data.map((item) => BuildingResponse.fromJson(item)).toList();
+  }
+  Future<BuildingDashboard> getDashboard(int buildingId, String token) async {
+    final response = await _client.get(
+      "buildings/$buildingId/dashboard",
+      token: token,
+    );
+    return BuildingDashboard.fromJson(response.data);
   }
 }
