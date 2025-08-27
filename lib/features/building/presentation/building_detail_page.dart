@@ -32,15 +32,7 @@ class BuildingDetailPage extends StatelessWidget {
                 context,
                 MaterialPageRoute(
                   builder: (_) => BuildingDashboardPage(
-                    buildingName: building.name,
-                    manager: "Ahmet Yılmaz", // İstersen API’den çekebilirsin
-                    apartmentCount: building.unitCount ?? 0,
-                    incomeByMonth: building.incomes
-                        .map((i) => i.amount.toDouble())
-                        .toList(),
-                    expenseByMonth: building.expenses
-                        .map((e) => e.amount.toDouble())
-                        .toList(),
+                      buildingId: building.id
                   ),
                 ),
               );
